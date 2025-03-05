@@ -18,7 +18,12 @@ export const sendConfirmationEmail = async (email: string, qrCodeUrl: string) =>
         from: process.env.EMAIL_USER,
         to: email,
         subject: "Konfirmasi Reservasi",
-        html: emailTemplate({qrCodeUrl})
+        html: emailTemplate({qrCodeUrl}),
+        attachments: [{
+            filename: "qrcode.png",
+            content: qrCodeUrl.split(';base64,').pop()!,
+            encoding: 'base64',
+        }]
     }
 
     await transporter.sendMail(mailOptions);
