@@ -7,9 +7,22 @@ export const showRegistrationForm = (req: Request, res: Response) => {
     res.render("register");
 }
 
-export const submitRegistration = async (req: Request, res: Response) => {
+export const submitRegistration = async (req: Request, res: Response): Promise<void> => {
     try {
         const {nama, email, jenis_kelamin, tanggal_reservasi} = req.body;
+
+        // validate input
+        if(!nama || !email || !jenis_kelamin || !tanggal_reservasi) {
+            res.status(400).send("Semua field harus diisi")
+            return;
+        }
+
+        // validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailRegex.test(email)) {
+            res.status(400).send("format email tidak valid");
+            return;
+        }
 
         // generate QR code
         const id = createRegistration(
