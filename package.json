@@ -11,23 +11,17 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@types/handlebars": "^4.0.40",
-    "better-sqlite3": "^11.8.1",
     "dotenv": "^16.4.7",
-    "ejs": "^3.1.10",
     "express": "^4.21.2",
-    "handlebars": "^4.7.8",
     "nodemailer": "^6.10.0",
     "qrcode": "^1.5.4",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.12",
     "@types/express": "^5.0.0",
-    "@types/node": "^22.13.9",
-    "@types/nodemailer": "^6.4.17",
-    "@types/qrcode": "^1.5.5",
-    "@types/uuid": "^10.0.0",
+    "@types/node": "^22.13.10",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
