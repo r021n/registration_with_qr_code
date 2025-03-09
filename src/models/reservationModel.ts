@@ -33,3 +33,17 @@ async function initDB() {
 }
 
 initDB();
+
+// fungsi untuk menyimpan reservasi
+export async function insertReservation(reservation: Reservation) {
+    const {id, name, email, gender, reservation_date, status} = reservation;
+    await db.run(`INSERT INTO reservations (id, name, email, gender, reservation_date, status) VALUES (?, ?, ?, ?, ?, ?)`, 
+        id, name, email, gender, reservation_date, status
+    );
+}
+
+// fungsi untuk mendapatkan jumlah total reservasi
+export async function getTotalReservations(): Promise<number> {
+    const row = await db.get<{count: number}>(`SELECT COUNT (*) as count FROM reservations`);
+    return row?.count || 0;
+}
