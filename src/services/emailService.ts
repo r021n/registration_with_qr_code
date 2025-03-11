@@ -5,8 +5,7 @@ dotenv.config();
 
 // buat transporter untuk mengirim email
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
+    service: "gmail",
     secure: false, // gunakan true jika port SMTP 465
     auth: {
         user: process.env.SMTP_USER,
