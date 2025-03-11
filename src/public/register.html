@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Registrasi</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <h1>Form Registrasi</h1>
+    <form action="/register" method="POST">
+      <label for="name">Name: </label>
+      <input type="text" name="name" id="name" required /><br /><br />
+
+      <label for="email">Email: </label>
+      <input type="email" name="email" id="email" required /> <br /><br />
+
+      <label>Jenis Kelamin</label>
+      <input type="radio" name="gender" id="male" value="Laki-laki" required />
+      <label for="male">Laki-laki</label>
+      <input
+        type="radio"
+        name="gender"
+        id="female"
+        value="Perempuan"
+        required
+      />
+      <label for="female">Perempuan</label> <br /><br />
+
+      <label for="reservation_date">Tanggal Reservasi:</label>
+      <input type="date" name="reservation_date" id="reservation_date" />
+
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
