@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cek Kehadiran</title>
+    <style>
+      #qr-reader {
+        width: 500px;
+        margin: auto;
+      }
+
+      #result {
+        text-align: center;
+        font-size: 1.2em;
+        margin-top: 20px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cek Kehadiran</h1>
+    <div id="qr-reader"></div>
+    <div id="result"></div>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script>
+      // fungsi yang dipanggil saat sukses melakukan scan qr
+      function onScanSuccess(decodedText, decodedResult) {
+        // hentikan pemindaian supaya tidak terus menerus
+        html5QrcodeScanner
+          .clear()
+          .then((_) => {
+            // kirim data qr code peserta ke endpoint /checkin
+            fetch("/checkin", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ qrCode: decodedText }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                document.getElementById("result").innerHTML = data.message;
+              })
+              .catch((err) => {
+                console.error(err);
+                document.getElementById("result").innerHTML =
+                  "error saat melakukan checkin";
+              });
+          })
+          .catch((err) => {
+            console.error("Gagal menghentikan scanner: ", err);
+          });
+      }
+
+      //   jika pemindaian gagal atau tidak ada QR yang terbaca
+      function onScanFailure(error) {
+        console.warn(`QR scan error ${error}`);
+      }
+
+      //   inisialisasi scanner
+      let html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", {
+        fps: 10,
+        qrbox: 250,
+      });
+
+      html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
+  </body>
+</html>

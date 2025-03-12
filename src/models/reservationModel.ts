@@ -47,3 +47,15 @@ export async function getTotalReservations(): Promise<number> {
     const row = await db.get<{count: number}>(`SELECT COUNT (*) as count FROM reservations`);
     return row?.count || 0;
 }
+
+// fungsi untuk mendapatkan data reservasi berdasarkan ID
+export async function getReservationById(id:string): Promise<Reservation | undefined> {
+    return await db.get<Reservation>(
+        `SELECT * FROM reservations WHERE id = ?`, id
+    );
+};
+
+// fungsi untuk memperbarui status reservasi berdasarkan id
+export async function updateReservationStatusById(id:string, status:string): Promise<void> {
+    await db.run(`UPDATE reservations SET status = ? WHERE id = ?`, status, id)
+}
