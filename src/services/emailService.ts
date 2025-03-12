@@ -13,13 +13,24 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export async function sendQRMail(to: string, qrCodeDataUrl: string): Promise<void> {
+export async function sendQRMail(to: string, qrCodeDataUrl: string, registrantName: string, reservationDate:string): Promise<void> {
+    // formating nama file
+    const filename = `${registrantName}_${reservationDate}.png`;
+
+    // ekstrak bagian base64 dari data URL
+    const base64Data = qrCodeDataUrl.split('base64,')[1];
     const mailOptions = {
         from: process.env.SMTP_USER,
         to,
         subject: "Konfirmasi reservasi dan QR code",
-        html: `<p>Terimakasih telah melakukan reservasi. Berikut adalah QR code reservasi anda:</p>
-                <img src=${qrCodeDataUrl} alt="QR Code">`
+        html: `<p>Terimakasih telah melakukan reservasi. silahkan cer lampiran untuk QR code reservasi anda</p>`,
+        attachments: [
+            {
+                filename,
+                content: base64Data,
+                encoding: 'base64'
+            }
+        ]
     }
 
     try {

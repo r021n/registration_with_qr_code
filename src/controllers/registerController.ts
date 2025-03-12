@@ -25,8 +25,13 @@ export const postRegister = async (req: Request, res: Response): Promise<void> =
         // generate qr code dari id unik
         const qrCodeDataUrl = await generateQRCode(id);
 
+        // ubah tanggal menjadi lebih mudah dibaca
+        const date = new Date(reservation_date);
+        const options = {day: '2-digit', month: 'long', year: 'numeric'} as const;
+        const formattedDate = date.toLocaleDateString('id-ID', options)
+
         // kirim qr code ke email pendaftar
-        await sendQRMail(email, qrCodeDataUrl);
+        await sendQRMail(email, qrCodeDataUrl, name, formattedDate);
 
         // redirect ke halaman awal
         return res.redirect("/");
